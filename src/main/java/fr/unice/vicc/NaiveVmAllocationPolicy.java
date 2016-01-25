@@ -5,6 +5,7 @@ import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.VmAllocationPolicy;
 import org.cloudbus.cloudsim.power.PowerHost;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,26 @@ public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
     @Override
     public boolean allocateHostForVm(Vm vm) {        
     	if (this.hoster.containsKey(vm.getUid())) {
-    		return true;    			
-    	}
+    		return true;   			
+    	}    	
+    	
+		int hostlistsize = getHostList().size(); 	    	
+    	boolean isitalloacated = false;
+    	int trynumb = 0;    	
+    	Host actualhost;	
+    	
+    	do {
+    		actualhost = getHostList().get(trynumb);
+    		actualhost.vmCreate(vm);
+    		System.out.println("doing  " + actualhost.toString() + "   " + vm.toString());
+    		
+			isitalloacated = true;
+			trynumb++;
+			
+		} while(!this.hoster.containsKey(vm.getUid()) || trynumb == hostlistsize || isitalloacated );
+    	
+    	
+    	
 		return false;    	
     }
 
