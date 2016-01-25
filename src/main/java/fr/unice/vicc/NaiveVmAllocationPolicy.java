@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by fhermeni2 on 16/11/2015.
@@ -34,31 +35,45 @@ public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
     public List<Map<String, Object>> optimizeAllocation(List<? extends Vm> list) {
         return null;
     }
-
-    @Override
-    public boolean allocateHostForVm(Vm vm) {        
-    	if (this.hoster.containsKey(vm.getUid())) {
-    		return true;   			
-    	}    	
+    
+ /*   
+ public boolean allocateHostForVm(Vm vm) {  
+    	
+		List<Host> hostlist = getHostList();
+		boolean result = false;
+		for (Host actualhost : hostlist) {
+			if(actualhost.vmCreate(vm)){
+				hoster.put(vm, actualhost);
+				result = true;
+				break;
+			}
+		}
+		return result;		
+ } */
+   
+ @Override
+    public boolean allocateHostForVm(Vm vm) {  
     	
 		int hostlistsize = getHostList().size(); 	    	
     	boolean isitalloacated = false;
     	int trynumb = 0;    	
-    	Host actualhost;	
+    	Host actualhost;    	
     	
     	do {
     		actualhost = getHostList().get(trynumb);
-    		actualhost.vmCreate(vm);
-    		System.out.println("doing  " + actualhost.toString() + "   " + vm.toString());
     		
-			isitalloacated = true;
-			trynumb++;
-			
-		} while(!this.hoster.containsKey(vm.getUid()) || trynumb == hostlistsize || isitalloacated );
-    	
-    	
-    	
-		return false;    	
+    		if (actualhost.vmCreate(vm) == true) {
+				hoster.put(vm, actualhost);
+				isitalloacated = true;
+				break;
+			}    		
+    		trynumb++;
+			  		
+    		//System.out.println("doing  " + actualhost.toString() + "   " + vm.toString());    		   		
+						
+		} while((isitalloacated == false) || (trynumb < hostlistsize));
+    	    	
+		return isitalloacated;      	   	
     }
 
     @Override
@@ -87,7 +102,15 @@ public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
 
     @Override
     public Host getHost(int vmId, int userId) {
-    	hoster = new HashMap<Vm,Host>();
-    	return this.hoster.get(Vm.getUid(userId, vmId));
+    	//hoster = new HashMap<Vm,Host>();
+    	//return this.hoster.get(Vm.getUid(userId, vmId));
+    	
+    	Set<Vm> VMSet = hoster.keySet();
+    	for(Vm v : VMSet){
+			if(v.getId() == vmId && v.getUserId() == userId){
+				return hoster.get(v);
+			}
+		}   
+    	return null; 
     }
 }
