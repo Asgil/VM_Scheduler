@@ -40,7 +40,9 @@ public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
 
     @Override
     public boolean allocateHostForVm(Vm vm, Host host) {
-        return false;
+        
+    	
+    	return false;
     }
 
     @Override
