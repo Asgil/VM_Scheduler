@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
 
-    /** The map to track the server that host each running VM. */
+    /** The map to track the server that hosts each running VM. */
     private Map<Vm,Host> hoster;
    
 
@@ -36,23 +36,28 @@ public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
 
     @Override
     public boolean allocateHostForVm(Vm vm) {        
-        return false;
+    	if (this.hoster.containsKey(vm.getUid())) {
+    		return true;    			
+    	}
+		return false;    	
     }
 
     @Override
     public boolean allocateHostForVm(Vm vm, Host host) {
     	
-    	try {
-    	
-			
-		} catch (Exception e) {
-			System.out.println(e.toString());
+    	if (host != null && host.vmCreate(vm)) {
+			hoster.put(vm, host);
+			return true;
 		}
 		return false;    	  	
     }
 
     @Override
     public void deallocateHostForVm(Vm vm) {
+    	Host host = this.hoster.remove(vm);    	
+    	if (host != null) {
+			host.vmDestroy(vm);
+		}    	
     }
 
     @Override
