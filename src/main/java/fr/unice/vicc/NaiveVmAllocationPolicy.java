@@ -16,6 +16,7 @@ public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
 
     /** The map to track the server that host each running VM. */
     private Map<Vm,Host> hoster;
+   
 
     public NaiveVmAllocationPolicy(List<? extends Host> list) {
         super(list);
@@ -40,9 +41,14 @@ public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
 
     @Override
     public boolean allocateHostForVm(Vm vm, Host host) {
-        
     	
-    	return false;
+    	try {
+    	
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return false;    	  	
     }
 
     @Override
@@ -51,11 +57,13 @@ public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
 
     @Override
     public Host getHost(Vm vm) {
-        return null;
+    	return this.hoster.get(vm);
+    	
     }
 
     @Override
     public Host getHost(int vmId, int userId) {
-        return null;
+    	hoster = new HashMap<Vm,Host>();
+    	return this.hoster.get(Vm.getUid(userId, vmId));
     }
 }
