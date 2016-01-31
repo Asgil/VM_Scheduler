@@ -67,9 +67,7 @@ public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
 				isitalloacated = true;
 				break;
 			}    		
-    		trynumb++;
-			  		
-    		//System.out.println("doing  " + actualhost.toString() + "   " + vm.toString());    		   		
+    		trynumb++;		
 						
 		} while((isitalloacated == false) || (trynumb < hostlistsize));
     	    	
