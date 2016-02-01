@@ -84,7 +84,6 @@ public class WorstFitPolicy extends VmAllocationPolicy {
 				hostWithMaxMips=host;			
 			}			
 		}*/
-    	
     	   	
     	actualMaxId = maxResHostId(hostAndResource); 		
     	Host actualhost = hostlist.get(actualMaxId);    	
