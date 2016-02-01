@@ -14,7 +14,13 @@ public class WorstFitPolicy extends VmAllocationPolicy {
 	 /** The map to track the server that hosts each running VM. */
     private Map<Vm,Host> hoster;
    
-
+/*
+ * Applying the Worst-fit policy on the list of VMs to allocate.
+ * The idea of the policy is to sort the virtual machines according to 2 resources: MIPS and RAM in descending order, 
+ * That policy allows to fit the machines with biggest requirements first, to decrease the amount of SLA violations,
+ * in case the smaller machines will supplant the biggest ones.
+ * 
+ */
     public WorstFitPolicy(List<? extends Host> list) {
         super(list);
         hoster =new HashMap<>();
@@ -32,15 +38,21 @@ public class WorstFitPolicy extends VmAllocationPolicy {
     }
     
 
-   
+  /*
+   * Sorting method to get the ID of a currently available for allocation VM with the biggest MIPS and RAM requirements.
+   * @param maxres1 = maximum  
+   */
     int maxResHostId(int[][] hostAndResource){
-    	int maxres1 = 0;
-    	int maxres2 = 0;
     	int maxHostId = 0;
+		int maxres1 = hostAndResource[maxHostId][1];
+		int maxres2 = hostAndResource[maxHostId][2];
     	
-    	for (int i = 0; i < 799; i++) {
-			if(hostAndResource[i][1]> maxres1 && hostAndResource[i][2] > maxres2 ){
+    	for (int i = 1; i < 799; i++) {
+			if(hostAndResource[i][1]> maxres1 || hostAndResource[i][2] > maxres2 ){
 				maxHostId=i;
+				maxres1 = hostAndResource[i][1];
+				maxres2 = hostAndResource[i][2];
+				
 			}
 		}    	
     	return maxHostId;
@@ -91,6 +103,7 @@ public class WorstFitPolicy extends VmAllocationPolicy {
      			}
     			else {
     				hostAndResource[actualMaxId][1]=0;
+    				hostAndResource[actualMaxId][2]=0;
     				actualMaxId = maxResHostId(hostAndResource);
     				actualhost = hostlist.get(actualMaxId);    				
     			}   

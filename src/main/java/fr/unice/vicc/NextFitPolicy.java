@@ -48,7 +48,13 @@ public class NextFitPolicy extends VmAllocationPolicy {
     		if (actualhost.vmCreate(vm) == true) {
 				hoster.put(vm, actualhost);
 				isitalloacated = true;
-				previousAllocatedVm = trynumb + 1;
+				if (trynumb == 799) {
+					trynumb = 0;
+					previousAllocatedVm = trynumb +1 ;
+				} else {
+				previousAllocatedVm = trynumb +1 ;
+				
+				}
 				break;
 			}    		
     		trynumb++;
