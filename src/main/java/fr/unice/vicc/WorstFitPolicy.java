@@ -34,11 +34,12 @@ public class WorstFitPolicy extends VmAllocationPolicy {
 
    
     int maxResHostId(int[][] hostAndResource){
-    	int maxres = 0;
+    	int maxres1 = 0;
+    	int maxres2 = 0;
     	int maxHostId = 0;
     	
     	for (int i = 0; i < 799; i++) {
-			if(hostAndResource[i][1]> maxres){
+			if(hostAndResource[i][1]> maxres1 && hostAndResource[i][2] > maxres2 ){
 				maxHostId=i;
 			}
 		}    	
@@ -52,12 +53,13 @@ public class WorstFitPolicy extends VmAllocationPolicy {
     	
     	int hostnum = 0;
     	int actualMaxId;
-    	int[][] hostAndResource = new int[800][2];
+    	int[][] hostAndResource = new int[800][3];
     	
     	List<Host> hostlist = getHostList();    	
     	for (Host host : hostlist) {
 			hostAndResource[hostnum][0] = host.getId();
-			hostAndResource[hostnum][1] = (int) (host.getAvailableMips() + host.getRamProvisioner().getAvailableRam());
+			hostAndResource[hostnum][1] = (int) (host.getAvailableMips());
+			hostAndResource[hostnum][2] = (int) (host.getRamProvisioner().getAvailableRam());
 			hostnum++;					
 		}   	    	
     /*	int currentMaxMips = 0;

@@ -1,0 +1,8 @@
+Workflow:
+
+1. Naive Scheduler
+2. Support for Highly-Available applications
+3. Next fit scheduler
+4. Worst fit scheduler
+5. No SLA violations
+6. Energy efficient
