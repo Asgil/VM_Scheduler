@@ -74,27 +74,10 @@ public class WorstFitPolicy extends VmAllocationPolicy {
 			hostAndResource[hostnum][2] = (int) (host.getRamProvisioner().getAvailableRam());
 			hostnum++;					
 		}   	    	
-    /*	int currentMaxMips = 0;
-    	int maxmips;
-    	Host hostWithMaxMips;
-    	for (Host host : hostlist) {
-    		maxmips = (int) host.getAvailableMips();
-			if (maxmips>currentMaxMips) {
-				currentMaxMips = maxmips;
-				hostWithMaxMips=host;			
-			}			
-		}*/
-    	   	
+
     	actualMaxId = maxResHostId(hostAndResource); 		
     	Host actualhost = hostlist.get(actualMaxId);    	
-    	//int trynumb =0;
-    	
-    	/*if (actualhost.vmCreate(vm) == true) {
-			hoster.put(vm, actualhost);
-			isitalloacated = true;
-			hostAndResource[actualMaxId][1] -= (int) (vm.getRam()+vm.getMips());			
-		}
-    	else {*/
+
     		do {        		
     			if (actualhost.vmCreate(vm) == true) {
     				hoster.put(vm, actualhost);
@@ -106,15 +89,7 @@ public class WorstFitPolicy extends VmAllocationPolicy {
     				actualMaxId = maxResHostId(hostAndResource);
     				actualhost = hostlist.get(actualMaxId);    				
     			}   
-    			
-    			/*actualhost = getHostList().get(trynumb);
-        		
-        		if (actualhost.vmCreate(vm) == true) {
-    				hoster.put(vm, actualhost);
-    				isitalloacated = true;
-    				break;
-    			}    		
-        		trynumb++; */
+
     		} while(isitalloacated == false);
 
 		return isitalloacated;      	   	

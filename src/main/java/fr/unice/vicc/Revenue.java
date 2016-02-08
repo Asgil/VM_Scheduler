@@ -94,7 +94,6 @@ public class Revenue {
         double p = 0;
         for (Vm v : dc.getVmList()) {
             p += refund(v, availability(v));
-            System.out.print(availability(v));
         }
         return p;
     }
