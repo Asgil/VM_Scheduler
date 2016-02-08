@@ -50,13 +50,21 @@ public class NoViolationPolicy extends VmAllocationPolicy {
 	    		remainingmipsonHost = actualhost.getAvailableMips();
 	    		remainingramforHost = actualhost.getRamProvisioner().getAvailableRam();
 	    		
-	    		if (remainingmipsonHost > maxmips && remainingramforHost > maxram) {	    		
+	    		if (remainingmipsonHost > maxmips && remainingramforHost > maxram) {
+	    			//System.out.println(remainingmipsonHost);
+	    			//System.out.println(maxmips);
+	    			//System.out.println(remainingramforHost);
+	    			//System.out.println(maxram);
 	    			if (actualhost.vmCreate(vm) == true) {
+	    				
+	    				
 						hoster.put(vm, actualhost);
 						isitalloacated = true;
 						break;
 					}
 	    		}
+	    		
+	    		
 	    		trynumb++;		
 							
 			} while((isitalloacated == false) || (trynumb < hostlistsize));
