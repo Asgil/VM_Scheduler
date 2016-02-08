@@ -26,6 +26,7 @@ public class VmAllocationPolicyFactory {
             case "noViolations": return new NoViolationPolicy(hosts);
             case "energy": return new EnergyEfficientPolicy(hosts);
             case "greedy": return new GreedyPolicy(hosts);
+            
         }
         throw new IllegalArgumentException("No such policy '" + id + "'");
     }

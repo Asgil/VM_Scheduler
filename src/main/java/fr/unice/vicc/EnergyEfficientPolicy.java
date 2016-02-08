@@ -82,6 +82,7 @@ public class EnergyEfficientPolicy extends VmAllocationPolicy {
     				hoster.put(vm, actualhost);
     				isitalloacated = true;
      			}
+    			
     			else {
     				hostAndResource[actualMaxId][1]=10000;
     				hostAndResource[actualMaxId][2]=10000;

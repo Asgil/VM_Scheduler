@@ -84,6 +84,7 @@ public class GreedyPolicy extends VmAllocationPolicy {
     				hoster.put(vm, actualhost);
     				isitalloacated = true;
      			}
+    			
     			}
     			else {
     				hostAndResource[actualMaxId][1]=10000;
