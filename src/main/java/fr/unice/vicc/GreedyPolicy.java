@@ -1,5 +1,6 @@
 
 
+
 package fr.unice.vicc;
 
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import org.cloudbus.cloudsim.Host;
 import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.VmAllocationPolicy;
 
-public class EnergyEfficientPolicy extends VmAllocationPolicy {
+public class GreedyPolicy extends VmAllocationPolicy {
 
 	 /** The map to track the server that hosts each running VM. */
     private Map<Vm,Host> hoster;
@@ -20,7 +21,7 @@ public class EnergyEfficientPolicy extends VmAllocationPolicy {
  * Applying the Energy Efficient policy to reduce energy consumption
  * 
  */
-    public EnergyEfficientPolicy(List<? extends Host> list) {
+    public GreedyPolicy(List<? extends Host> list) {
         super(list);
         hoster =new HashMap<>();
     }
@@ -78,10 +79,12 @@ public class EnergyEfficientPolicy extends VmAllocationPolicy {
     	Host actualhost = hostlist.get(actualMaxId);    	
 
     		do {
+    			if (actualhost.isSuitableForVm(vm)){
     			if (actualhost.vmCreate(vm) == true) {
     				hoster.put(vm, actualhost);
     				isitalloacated = true;
      			}
+    			}
     			else {
     				hostAndResource[actualMaxId][1]=10000;
     				hostAndResource[actualMaxId][2]=10000;
@@ -130,4 +133,5 @@ public class EnergyEfficientPolicy extends VmAllocationPolicy {
     	return null; 
     }
 }
+
 
