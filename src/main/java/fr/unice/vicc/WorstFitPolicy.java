@@ -15,6 +15,7 @@ public class WorstFitPolicy extends VmAllocationPolicy {
     private Map<Vm,Host> hoster;
    
 /**
+ * 
  * Applying the Worst-fit policy on the list of VMs to allocate.
  * The idea of the policy is to sort the virtual machines according to 2 resources: MIPS and RAM in descending order, 
  * That policy allows to fit the machines with biggest requirements first, to decrease the amount of SLA violations,

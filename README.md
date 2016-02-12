@@ -2,7 +2,6 @@
 
 This project aims at developing different Vm schedulers for a given IaaS cloud. Each scheduler will have meaningful properties for either the cloud customers or the cloud provider.
 
-
 ## Exercices
 
 ###Sheduler I. Naive.
@@ -24,7 +23,7 @@ We see that we have revenue gained, as well as the SLA violations.
 
 Class AntiAffinityVmAllocationPolicy.java implements the VM allocation with regard to their affinity. 
 1. The theoretical complexity of the algorithm: Let us assume the machines arrive according to their ID (we have seen it in logs).
-Then worst case scenario of complexity is when we schedule the VM to the last Host in the list, the next VM to the last-1. So `(n+n-1+n-2... n-h)*(k/h).toInt` where `n` is the number of VMs, `h` is the # of VM should not be on the same host and `k` is the number of hosts. We take the whole pa of `(k/h)` to get the number of iterations for each VM cluster. \n 
+Then worst case scenario of complexity is when we schedule the VM to the last Host in the list, the next VM to the last-1. So `(n+n-1+n-2... n-h)*(k/h).toInt` where `n` is the number of VMs, `h` is the # of VM should not be on the same host and `k` is the number of hosts. We take the whole pa of `(k/h)` to get the number of iterations for each VM cluster. 
 2. This kind of an algorithm has a negative impact on the cluster capacity, because it introduces additional constraints to the VM allocation policy. It is required to have at least 100 host available for 100 VMs and the host with the minimum capacity should be at least as powerful as the sum of the minimum resources required vm from each set of 100. The resources might be underused and the energy consumption increases  little, because we cannot pack VMs most efficiently.
 
 
@@ -60,7 +59,6 @@ Incomes:    12399.24
 Penalties:  6.06
 Energy:     3271.79
 Revenue:    9121.40
-
 ```
 
 1. The best performance in terms of SLA violations reduction is when running Worst-fit algorithm, because machines are allocated to the host with the most remaining resources, so the possibility to have SLA violations due to resoure unavailability is less than in case of the Next-fit.
