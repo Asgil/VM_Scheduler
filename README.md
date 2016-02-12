@@ -24,8 +24,8 @@ We see that we have revenue gained, as well as the SLA violations.
 
 Class AntiAffinityVmAllocationPolicy.java implements the VM allocation with regard to their affinity. 
 1. The theoretical complexity of the algorithm: Let us assume the machines arrive according to their ID (we have seen it in logs).
-Then worst case scenario of complexity is when we schedule the VM to the last Host in the list, the next VM to the last-1. So `(n+n-1+n-2... n-h)*(k/h).toInt` where `n` is the number of VMs, `h` is the # of VM should not be on the same host and `k` is the number of hosts. We take the whole pa of `(k/h)` to get the number of iterations for each VM cluster.
-1. This kind of an algorithm has a negative impact on the cluster capacity, because it introduces additional constraints to the VM allocation policy. It is required to have at least 100 host available for 100 VMs and the host with the minimum capacity should be at least as powerful as the sum of the minimum resources required vm from each set of 100. The resources might be underused and the energy consumption increases  little, because we cannot pack VMs most efficiently.
+Then worst case scenario of complexity is when we schedule the VM to the last Host in the list, the next VM to the last-1. So `(n+n-1+n-2... n-h)*(k/h).toInt` where `n` is the number of VMs, `h` is the # of VM should not be on the same host and `k` is the number of hosts. We take the whole pa of `(k/h)` to get the number of iterations for each VM cluster. \n 
+2. This kind of an algorithm has a negative impact on the cluster capacity, because it introduces additional constraints to the VM allocation policy. It is required to have at least 100 host available for 100 VMs and the host with the minimum capacity should be at least as powerful as the sum of the minimum resources required vm from each set of 100. The resources might be underused and the energy consumption increases  little, because we cannot pack VMs most efficiently.
 
 
 The summarized output for all days:
@@ -65,7 +65,7 @@ Revenue:    9121.40
 
 1. The best performance in terms of SLA violations reduction is when running Worst-fit algorithm, because machines are allocated to the host with the most remaining resources, so the possibility to have SLA violations due to resoure unavailability is less than in case of the Next-fit.
 1. The theoretical complexity: Next-fit: Let us suoppose the next suitable VM is just behind the already allocated one. So it has to check k machines until it finds the next one. So the complexity is `k*n`.
-Worst fit: `(k-1)*n.` First we sort the hosts (`k-1` times comparison) and do it for the `n` VMs.
+Worst fit: `(k-1)*n`. First we sort the hosts (`k-1` times comparison) and do it for the n VMs.
 
 ###Sheduler IV. No SLA Violations.
 
