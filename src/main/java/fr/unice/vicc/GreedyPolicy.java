@@ -48,7 +48,7 @@ public class GreedyPolicy extends VmAllocationPolicy {
 		int maxres2 = hostAndResource[maxHostId][2];
     	
     	for (int i = 1; i < 799; i++) {
-			if(hostAndResource[i][1]< maxres1 || hostAndResource[i][2] < maxres2 ){
+			if(hostAndResource[i][1] < maxres1 || hostAndResource[i][2] < maxres2 ){
 				maxHostId=i;
 				maxres1 = hostAndResource[i][1];
 				maxres2 = hostAndResource[i][2];
@@ -76,24 +76,28 @@ public class GreedyPolicy extends VmAllocationPolicy {
 		}   	    	
 
     	actualMaxId = maxResHostId(hostAndResource); 		
-    	Host actualhost = hostlist.get(actualMaxId);    	
-
-    		do {
-    			if (actualhost.isSuitableForVm(vm)){
-    			if (actualhost.vmCreate(vm) == true) {
-    				hoster.put(vm, actualhost);
-    				isitalloacated = true;
-     			}
-    			
-    			}
-    			else {
-    				hostAndResource[actualMaxId][1]=10000;
-    				hostAndResource[actualMaxId][2]=10000;
-    				actualMaxId = maxResHostId(hostAndResource);
-    				actualhost = hostlist.get(actualMaxId);    				
-    			}   
-
-    		} while(isitalloacated == false);
+    	Host actualhost = hostlist.get(actualMaxId);  
+    	
+    	double tradeoffRam = 1.1;
+    	double tradeoffMips = 1.1;
+		do {
+			if ((vm.getRam() < (tradeoffRam * actualhost.getRamProvisioner().getAvailableRam()))
+					|| vm.getMips() < (tradeoffMips * actualhost.getMaxAvailableMips())
+					) {
+				if (actualhost.vmCreate(vm) == true) {
+					hoster.put(vm, actualhost);
+					isitalloacated = true;
+					System.out.println(vm.getId());					
+					break;	
+				}
+			}
+			else {
+				hostAndResource[actualMaxId][1]=100000;
+				hostAndResource[actualMaxId][2]=100000;
+				actualMaxId = maxResHostId(hostAndResource);
+				actualhost = hostlist.get(actualMaxId); 
+			}
+		} while(isitalloacated == false);
 
 		return isitalloacated;      	   	
     }

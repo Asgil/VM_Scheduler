@@ -36,13 +36,13 @@ public class AntiAffinityVmAllocationPolicy extends VmAllocationPolicy{
 			 boolean isitalloacated = false;
 			 int trynumb = 0; 
 			 Host actualhost;
-			 int acutalVmIdTrimed = (int) Math.floor(vm.getId()/100);
+			 int actualVmIdTrimed = (int) Math.floor(vm.getId()/100);
 			 
 			 do {
 				 actualhost = getHostList().get(trynumb);
 				 List<Vm> vmsOnHost = actualhost.getVmList();
 				 
-				 if (decideIfVmInside(vmsOnHost, acutalVmIdTrimed)==true) {
+				 if (decideIfVmInside(vmsOnHost, actualVmIdTrimed)==true) {
 					 trynumb++;
 				}
 				 else{

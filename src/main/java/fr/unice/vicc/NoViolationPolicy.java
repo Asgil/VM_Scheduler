@@ -44,8 +44,7 @@ public class NoViolationPolicy extends VmAllocationPolicy {
 	    	do {
 	    		actualhost = getHostList().get(trynumb);
 	    		if (actualhost.isSuitableForVm(vm)){
-	    			if (actualhost.vmCreate(vm) == true) {
-	    				  				
+	    			if (actualhost.vmCreate(vm) == true) {	    				  				
 						hoster.put(vm, actualhost);
 						isitalloacated = true;
 						break;
