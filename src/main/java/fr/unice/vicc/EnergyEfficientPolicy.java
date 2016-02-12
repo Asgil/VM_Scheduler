@@ -37,9 +37,10 @@ public class EnergyEfficientPolicy extends VmAllocationPolicy {
     }
     
 
-  /*
+  /**
    * Sorting method to get the ID of a currently available for allocation VM with the biggest MIPS and RAM requirements.
-   * @param maxres1 = maximum  
+   * @param maxres1 = maximum available MIPS
+   * @param maxres2 = maximum available RAM
    */
     int maxResHostId(int[][] hostAndResource){
     	int maxHostId = 0;
@@ -66,6 +67,10 @@ public class EnergyEfficientPolicy extends VmAllocationPolicy {
     	int actualMaxId;
     	int[][] hostAndResource = new int[800][3];
     	
+
+    	/**
+    	 * We fill the list of all hosts with their available MIPS and RAM to use in sorting later
+    	 */
     	List<Host> hostlist = getHostList();    	
     	for (Host host : hostlist) {
 			hostAndResource[hostnum][0] = host.getId();

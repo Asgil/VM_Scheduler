@@ -43,6 +43,10 @@ public class NoViolationPolicy extends VmAllocationPolicy {
 	    	
 	    	do {
 	    		actualhost = getHostList().get(trynumb);
+	    		/**
+	    		 * The method isSuitableForVM returns true if the host can handle all needed by the VM RAM
+	    		 * So that is will always be available and SLA won't be violated.
+	    		 */
 	    		if (actualhost.isSuitableForVm(vm)){
 	    			if (actualhost.vmCreate(vm) == true) {	    				  				
 						hoster.put(vm, actualhost);
