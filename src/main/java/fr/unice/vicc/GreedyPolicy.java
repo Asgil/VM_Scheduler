@@ -88,8 +88,7 @@ public class GreedyPolicy extends VmAllocationPolicy {
 					hoster.put(vm, actualhost);
 					isitalloacated = true;
 					System.out.println(vm.getId());					
-					break;	
-					
+					break;						
 				}
 			}
 			else {
